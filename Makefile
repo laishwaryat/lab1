@@ -1,3 +1,3 @@
 hello:
-	clang -o abc hello.c
-	./abc.exe
+	clang -o hello hello.c
+	./hello
