@@ -58,7 +58,7 @@ do_fork(void)
   */
   rmp = mp;
   if ((procs_in_use == NR_PROCS) ||
-  		(procs_in_use >= NR_PROCS-LAST_FEW && re->mp_effuid != 0))
+  		(procs_in_use >= NR_PROCS-LAST_FEW && rmp->mp_effuid != 0))
   {
   	printf("PM: warning, process table is full!\n");
   	return(EAGAIN);
@@ -136,7 +136,7 @@ do_fork(void)
   /* Do not reply until VFS is ready to process the fork
   * request
   */
-  printf("Minix: PID %u created\n",new_pid);
+	  printf("Minix: PID %u created\n",new_pid);
 
   return SUSPEND;
 }
@@ -237,6 +237,7 @@ do_srv_fork(void)
 
   /* Wakeup the newly created process */
   reply(rmc-mproc, OK);
+
   return rmc->mp_pid;
 }
 
@@ -260,7 +261,6 @@ do_exit(void)
 	  printf("Minix: PID %u exited\n",mp->mp_pid);
       exit_proc(mp, m_in.m_lc_pm_exit.status, FALSE /*dump_core*/);
   }
-
   return(SUSPEND);		/* can't communicate from beyond the grave */
 }
 
@@ -807,4 +807,3 @@ cleanup(
   rmp->mp_child_stime = 0;
   procs_in_use--;
 }
-
