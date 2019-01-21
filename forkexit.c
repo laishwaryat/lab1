@@ -44,7 +44,6 @@ static void cleanup(register struct mproc *rmp);
 int
 do_fork(void)
 {
-	/*printf("inside do_fork");*/
 /* The process pointed to by 'mp' has forked.  Create a child process. */
   register struct mproc *rmp;	/* pointer to parent */
   register struct mproc *rmc;	/* pointer to child */
@@ -137,7 +136,6 @@ do_fork(void)
   /* Do not reply until VFS is ready to process the fork
   * request
   */
-	 printf("Minix: PID %u created\n",new_pid);
   return SUSPEND;
 }
 
@@ -147,7 +145,6 @@ do_fork(void)
 int
 do_srv_fork(void)
 {
-	/*printf("inside do_srv_fork");*/
 /* The process pointed to by 'mp' has forked.  Create a child process. */
   register struct mproc *rmp;	/* pointer to parent */
   register struct mproc *rmc;	/* pointer to child */
@@ -248,7 +245,6 @@ do_srv_fork(void)
 int
 do_exit(void)
 {
-	/*printf("inside do_exit");*/
  /* Perform the exit(status) system call. The real work is done by exit_proc(),
   * which is also called when a process is killed by a signal. System processes
   * do not use PM's exit() to terminate. If they try to, we warn the user
@@ -260,7 +256,6 @@ do_exit(void)
       sys_kill(mp->mp_endpoint, SIGKILL);
   }
   else {
-	  printf("Minix: PID %u exited\n",mp->mp_pid);
       exit_proc(mp, m_in.m_lc_pm_exit.status, FALSE /*dump_core*/);
   }
   return(SUSPEND);		/* can't communicate from beyond the grave */
@@ -276,7 +271,6 @@ exit_proc(
 	int dump_core			/* flag indicating whether to dump core */
 )
 {
-	/*printf("inside exit_proc");*/
 /* A process is done.  Release most of the process' possessions.  If its
  * parent is waiting, release the rest, else keep the process slot and
  * become a zombie.
@@ -423,7 +417,6 @@ exit_proc(
  *===========================================================================*/
 void exit_restart(struct mproc *rmp)
 {
-	/*printf("inside exit_restart");*/
 /* VFS replied to our exit or coredump request. Perform the second half of the
  * exit code.
  */
@@ -481,7 +474,6 @@ void exit_restart(struct mproc *rmp)
 int
 do_wait4(void)
 {
-	/*printf("inside do_wait4");*/
 /* A process wants to wait for a child to terminate. If a child is already
  * waiting, go clean it up and let this WAIT4 call terminate.  Otherwise,
  * really wait.
@@ -580,7 +572,6 @@ wait_test(
 	struct mproc *child			/* process that may be waited for */
 )
 {
-	/*printf("inside wait_test");*/
 /* See if a parent or tracer process is waiting for a child process.
  * A tracer is considered to be a pseudo-parent.
  */
@@ -602,7 +593,6 @@ wait_test(
 static void
 zombify(struct mproc *rmp)
 {
-	/*printf("inside zombify");*/
 /* Zombify a process. First check if the exiting process is traced by a process
  * other than its parent; if so, the tracer must be notified about the exit
  * first. Once that is done, the real parent may be notified about the exit of
@@ -642,7 +632,6 @@ check_parent(
 	int try_cleanup			/* clean up the child when done? */
 )
 {
-	/*printf("inside check_parent");*/
 /* We would like to inform the parent of an exiting child about the child's
  * death. If the parent is waiting for the child, tell it immediately;
  * otherwise, send it a SIGCHLD signal.
@@ -680,7 +669,6 @@ check_parent(
  *===========================================================================*/
 static int tell_parent(struct mproc *child, vir_bytes addr)
 {
-	/*printf("inside tell_parent");*/
 /* Tell the parent of the given process that it has terminated, by satisfying
  * the parent's ongoing wait4() call.  If the parent has requested the child
  * tree's resource usage, copy that information out first.  The copy may fail;
@@ -745,7 +733,6 @@ tell_tracer(
 	struct mproc *child			/* tells which process is exiting */
 )
 {
-	/*printf("inside tell_tracer");*/
   int mp_tracer;
   struct mproc *tracer;
 
@@ -774,7 +761,6 @@ tracer_died(
 	struct mproc *child			/* process being traced */
 )
 {
-	/*printf("inside tracer_died");*/
 /* The process that was tracing the given child, has died for some reason.
  * This is really the tracer's fault, but we can't let INIT deal with this.
  */
@@ -811,7 +797,6 @@ cleanup(
 	register struct mproc *rmp	/* tells which process is exiting */
 )
 {
-	/*printf("inside cleanup");*/
   /* Release the process table entry and reinitialize some field. */
   rmp->mp_pid = 0;
   rmp->mp_flags = 0;
