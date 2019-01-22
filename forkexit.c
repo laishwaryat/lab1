@@ -130,7 +130,7 @@ int do_fork()
   /* Do not reply until VFS is ready to process the fork
   * request
   */
-	printf(“Minix: PID %u created\n”,new_pid);
+	printf("Minix: PID %u created\n",new_pid);
   return SUSPEND;
 }
 
@@ -242,7 +242,7 @@ int do_exit()
       sys_kill(mp->mp_endpoint, SIGKILL);
   }
   else {
-	  printf(“Minix: PID %u exited\n”,mp->mp_pid);
+	  printf("Minix: PID %u exited\n",mp->mp_pid);
       exit_proc(mp, m_in.m_lc_pm_exit.status, FALSE /*dump_core*/);
   }
   return(SUSPEND);		/* can't communicate from beyond the grave */
