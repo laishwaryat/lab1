@@ -1,8 +1,5 @@
 
-#include <sys/types.h>
-#include <sys/wait.h>
 #include <stdio.h>
-#include <unistd.h>
 
 void func(int v, char s[]){
 
